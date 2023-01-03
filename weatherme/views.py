@@ -41,3 +41,7 @@ def get_weather(request, lat=None, lon=None, city_name="London", county_name=Non
         }
     print(weather_pack)
     return HttpResponse(json.dumps(weather_pack))
+
+
+def say_hello(request):
+    return HttpResponse("hello!")
