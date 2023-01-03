@@ -20,5 +20,6 @@ import weatherme.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('weather/city=<str:city_name>&country=<str:country_name>',weatherme.views.get_weather)
+    path('weather/city=<city_name>/', weatherme.views.get_weather),
+    path('weather/city=<city_name>&country=<country_name>/', weatherme.views.get_weather)
 ]

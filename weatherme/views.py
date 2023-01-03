@@ -16,6 +16,10 @@ def get_weather(request, lat=None, lon=None, city_name="London", county_name=Non
             geo_coords = geo_coords_req.json()
             if len(geo_coords['results']) > 1:
                 print("please specify a country")
+                return HttpResponse("please specify a country")
+            if len(geo_coords['results']) == 0:
+                print("no such city")
+                return HttpResponse("no such city")
             lat = geo_coords['results'][0]['geometry']['location']['lat']
             lon = geo_coords['results'][0]['geometry']['location']['lng']
 
