@@ -1,0 +1,3 @@
+GEOCODDING_API_KEY = "AIzaSyAfjpoiLRyrEaP_zIn3T_o1jqsz6MIhpmg"
+WEATHER_API_KEY = "af9c3430fef9082d0125da0e80baf071"
+API_KEY = "a4Gsee6jhV2Klc89Prvsh34"
