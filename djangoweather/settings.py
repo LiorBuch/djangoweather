@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!__u91xy7ij-^)zbcsyfyj6e$(68v1rhlqjixb!$#!@ty0dzt6
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
+ENABLE_ORYX_BUILD = True
 
 # Application definition
 

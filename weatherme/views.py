@@ -34,7 +34,8 @@ def get_weather(request,key, lat=None, lon=None, city_name="London", county_name
                 },
                 'state': {
                     'sky': weather_data['weather'][0]['main'],
-                    'sky_info': weather_data['weather'][0]['description']
+                    'sky_info': weather_data['weather'][0]['description'],
+                    'sky_icon': weather_data['weather'][0]['icon']
                 }
             }
         return HttpResponse(json.dumps(weather_pack))
