@@ -15,10 +15,8 @@ def get_weather(request,key, lat=None, lon=None, city_name="London", county_name
             if geo_coords_req.status_code == 200:
                 geo_coords = geo_coords_req.json()
                 if len(geo_coords['results']) > 1:
-                    print("please specify a country")
                     return HttpResponse("please specify a country")
                 if len(geo_coords['results']) == 0:
-                    print("no such city")
                     return HttpResponse("no such city")
                 lat = geo_coords['results'][0]['geometry']['location']['lat']
                 lon = geo_coords['results'][0]['geometry']['location']['lng']
@@ -39,7 +37,6 @@ def get_weather(request,key, lat=None, lon=None, city_name="London", county_name
                     'sky_info': weather_data['weather'][0]['description']
                 }
             }
-        print(weather_pack)
         return HttpResponse(json.dumps(weather_pack))
     else:
         return HttpResponse(status_code=500)

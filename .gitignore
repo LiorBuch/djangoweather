@@ -1,3 +1,6 @@
 .python_packages
 __pycache__
 venv
+.vscode
+.github
+.gitignore
