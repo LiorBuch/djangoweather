@@ -26,7 +26,7 @@ def get_weather(request, lat=None, lon=None, city_name="London", county_name=Non
 
 
 def say_hello(request):
-    return HttpResponse("hello!")
+    return HttpResponse("hello! from v1.1")
 
 
 def get_weather_gps(request, lat, lon, units="metric"):
