@@ -8,7 +8,7 @@ import local_key
 
 def get_weather(request, lat=None, lon=None, city_name="London", county_name=None):
     if request.headers["api"] == local_key.API_KEY:
-        if lat or lon is not None:
+        if lat or lon is None:
             if city_name is not None:
                 geo_coords_req = requests.get(
                     url=f"https://maps.googleapis.com/maps/api/geocode/json?address={city_name}&key={local_key.GEOCODDING_API_KEY}")
@@ -20,7 +20,8 @@ def get_weather(request, lat=None, lon=None, city_name="London", county_name=Non
                         return HttpResponse("no such city")
                     lat = geo_coords['results'][0]['geometry']['location']['lat']
                     lon = geo_coords['results'][0]['geometry']['location']['lng']
-                    get_weather_gps(request, lat, lon)
+                    obj = get_weather_gps(request, lat, lon)
+                    return obj
     else:
         return HttpResponse(status_code=500)
 
@@ -49,6 +50,6 @@ def get_weather_gps(request, lat, lon, units="metric"):
                     'sky_icon': weather_data['weather'][0]['icon']
                 }
             }
-        return HttpResponse(json.dumps(weather_pack))
+            return HttpResponse(json.dumps(weather_pack))
     else:
         return HttpResponse(status_code=500)

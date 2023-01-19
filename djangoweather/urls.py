@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hi/',weatherme.views.say_hello),
     path('',weatherme.views.say_hello),
-    path('weather/city=<city_name>&key=<key>/', weatherme.views.get_weather),
+    path('weather/city=<city_name>/', weatherme.views.get_weather),
     path('weather_gps/lat=<lat>&lon=<lon>/', weatherme.views.get_weather_gps),
-    path('weather/city=<city_name>&country=<country_name>&key=<key>/', weatherme.views.get_weather)
+    path('weather/city=<city_name>&country=<country_name>/', weatherme.views.get_weather)
 ]
