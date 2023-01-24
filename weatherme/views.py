@@ -15,22 +15,25 @@ def get_weather(request, lat=None, lon=None, city_name="London", county_name=Non
                 if geo_coords_req.status_code == 200:
                     geo_coords = geo_coords_req.json()
                     if len(geo_coords['results']) > 1:
-                        return HttpResponse("please specify a country")
+                        return HttpResponse(status=300, content={
+                            'info': 'More than one location was found, need country name as well'})
                     if len(geo_coords['results']) == 0:
                         return HttpResponse("no such city")
                     lat = geo_coords['results'][0]['geometry']['location']['lat']
                     lon = geo_coords['results'][0]['geometry']['location']['lng']
-                    obj = get_weather_gps(request, lat, lon)
+
+                    county_name = geo_coords['results'][0]["formatted_address"]
+                    obj = get_weather_gps(request, lat, lon, name=county_name)
                     return obj
     else:
         return HttpResponse(status_code=500)
 
 
 def say_hello(request):
-    return HttpResponse("hello! from v1.1")
+    return HttpResponse("hello! from v1.2")
 
 
-def get_weather_gps(request, lat, lon, units="metric"):
+def get_weather_gps(request, lat, lon, name, units="metric"):
     weather_pack = None
     if request.headers["api"] == local_key.API_KEY:
         weather_res = requests.get(
@@ -38,7 +41,7 @@ def get_weather_gps(request, lat, lon, units="metric"):
         if weather_res.status_code == 200:
             weather_data = weather_res.json()
             weather_pack = {
-                'city_name': weather_data['name'],
+                'city_name': str(name),
                 'temp': {
                     'current': weather_data['main']['temp'],
                     'max': weather_data['main']['temp_max'],
