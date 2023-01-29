@@ -6,21 +6,21 @@ import requests
 import local_key
 
 
-def get_weather(request, lat=None, lon=None, city_name="London", county_name=None):
+def get_weather(request, lat=None, lon=None, city_name="London", country_name=None, state_code=None):
     if request.headers["api"] == local_key.API_KEY:
         if lat or lon is None:
             if city_name is not None:
                 geo_coords_req = requests.get(
-                    url=f"https://maps.googleapis.com/maps/api/geocode/json?address={city_name}&key={local_key.GEOCODDING_API_KEY}")
+                    url=f"http://api.openweathermap.org/geo/1.0/direct?q={city_name},{state_code},{country_name}&limit=3&appid={local_key.WEATHER_API_KEY}")
                 if geo_coords_req.status_code == 200:
                     geo_coords = geo_coords_req.json()
-                    if len(geo_coords['results']) > 1:
+                    if len(geo_coords) > 1:
                         return HttpResponse(status=300, content={
                             'info': 'More than one location was found, need country name as well'})
                     if len(geo_coords['results']) == 0:
                         return HttpResponse("no such city")
-                    lat = geo_coords['results'][0]['geometry']['location']['lat']
-                    lon = geo_coords['results'][0]['geometry']['location']['lng']
+                    lat = geo_coords[0]['lat']
+                    lon = geo_coords[0]['lon']
 
                     county_name = geo_coords['results'][0]["formatted_address"]
                     obj = get_weather_gps(request, lat, lon, name=county_name)
